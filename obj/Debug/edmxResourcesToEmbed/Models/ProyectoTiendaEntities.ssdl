@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="proyectoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="asignaciones_cliente">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cliente_id" Type="int" Nullable="false" />
+    <Property Name="monto" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="fecha_asignacion" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="autor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="cliente">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="usuario_id" Type="int" Nullable="false" />
+    <Property Name="documento" Type="nvarchar" MaxLength="13" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="fecha_nacimiento" Type="date" Nullable="false" />
+    <Property Name="monto_dinero" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ejemplar_libro">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="codigo" Type="nvarchar" MaxLength="13" Nullable="false" />
+    <Property Name="libro_id" Type="int" Nullable="false" />
+    <Property Name="cliente_id" Type="int" />
+  </EntityType>
+  <EntityType Name="genero">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="libro">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="descripcion" Type="nvarchar" MaxLength="255" />
+    <Property Name="paginas" Type="int" Nullable="false" />
+    <Property Name="precio_sugerido" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="autor_id" Type="int" Nullable="false" />
+    <Property Name="genero_id" Type="int" Nullable="false" />
+    <Property Name="fecha_creacion" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="usuario" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="contrasenia" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__asignacio__clien__2D27B809">
+    <End Role="cliente" Type="Self.cliente" Multiplicity="1" />
+    <End Role="asignaciones_cliente" Type="Self.asignaciones_cliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cliente">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="asignaciones_cliente">
+        <PropertyRef Name="cliente_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__cliente__usuario__286302EC">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+    <End Role="cliente" Type="Self.cliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="cliente">
+        <PropertyRef Name="usuario_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ejemplar___clien__3C69FB99">
+    <End Role="cliente" Type="Self.cliente" Multiplicity="0..1" />
+    <End Role="ejemplar_libro" Type="Self.ejemplar_libro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cliente">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ejemplar_libro">
+        <PropertyRef Name="cliente_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ejemplar___libro__3A81B327">
+    <End Role="libro" Type="Self.libro" Multiplicity="1" />
+    <End Role="ejemplar_libro" Type="Self.ejemplar_libro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="libro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ejemplar_libro">
+        <PropertyRef Name="libro_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__libro__autor_id__35BCFE0A">
+    <End Role="autor" Type="Self.autor" Multiplicity="1" />
+    <End Role="libro" Type="Self.libro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="autor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="libro">
+        <PropertyRef Name="autor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__libro__genero_id__36B12243">
+    <End Role="genero" Type="Self.genero" Multiplicity="1" />
+    <End Role="libro" Type="Self.libro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="genero">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="libro">
+        <PropertyRef Name="genero_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="proyectoModelStoreContainer">
+    <EntitySet Name="asignaciones_cliente" EntityType="Self.asignaciones_cliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="autor" EntityType="Self.autor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ejemplar_libro" EntityType="Self.ejemplar_libro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="genero" EntityType="Self.genero" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="libro" EntityType="Self.libro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__asignacio__clien__2D27B809" Association="Self.FK__asignacio__clien__2D27B809">
+      <End Role="cliente" EntitySet="cliente" />
+      <End Role="asignaciones_cliente" EntitySet="asignaciones_cliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__cliente__usuario__286302EC" Association="Self.FK__cliente__usuario__286302EC">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="cliente" EntitySet="cliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ejemplar___clien__3C69FB99" Association="Self.FK__ejemplar___clien__3C69FB99">
+      <End Role="cliente" EntitySet="cliente" />
+      <End Role="ejemplar_libro" EntitySet="ejemplar_libro" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ejemplar___libro__3A81B327" Association="Self.FK__ejemplar___libro__3A81B327">
+      <End Role="libro" EntitySet="libro" />
+      <End Role="ejemplar_libro" EntitySet="ejemplar_libro" />
+    </AssociationSet>
+    <AssociationSet Name="FK__libro__autor_id__35BCFE0A" Association="Self.FK__libro__autor_id__35BCFE0A">
+      <End Role="autor" EntitySet="autor" />
+      <End Role="libro" EntitySet="libro" />
+    </AssociationSet>
+    <AssociationSet Name="FK__libro__genero_id__36B12243" Association="Self.FK__libro__genero_id__36B12243">
+      <End Role="genero" EntitySet="genero" />
+      <End Role="libro" EntitySet="libro" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

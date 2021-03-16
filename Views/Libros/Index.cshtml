@@ -1,0 +1,45 @@
+﻿@using ProyectoTienda.Models.Modelo
+@model List<LibroMDL>
+@{
+    ViewBag.Title = "Index";
+}
+
+<style class="img-fluid">
+    body {
+        background-image: url(https://thewritelife.com/wp-content/uploads/2019/08/How-to-format-a-book.jpg);
+        background-size: 100%
+    }
+</style>
+
+<h2 style="color:white">Listado De Libros</h2>
+@if (Model != null)
+{
+<table class="table table-striped " style="color:black" width="80%">
+    <thead class="table table-dark" >
+        <tr>
+            <th scope="col">Codigo</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Precio</th>
+            
+
+        </tr>
+    </thead>
+    <tbody class="table-striped">
+        @foreach (LibroMDL l in Model)
+        {
+        <tr>
+            <td>@l.Codigo</td>
+            <td>@l.Nombre</td>
+            <td>@l.Descripcion</td>
+            <td>@l.PrecioSugerido</td>
+            
+        </tr>
+        }
+
+    </tbody>
+</table>
+}
+
+
+
